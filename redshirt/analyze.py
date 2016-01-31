@@ -8,7 +8,7 @@ def _extract_roi(image, axis=-1):
     initial_mask = max_frame > threshold_otsu(max_frame)
     regions = ndi.label(initial_mask)[0]
     region_sizes = np.bincount(np.ravel(regions))
-    return regions == np.argmax(region_sizes[1:])
+    return regions == (np.argmax(region_sizes[1:]) + 1)
 
 
 def extract_trace(image, axis=-1):
