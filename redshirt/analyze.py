@@ -12,7 +12,7 @@ def _extract_roi(image, axis=-1):
 
 
 def extract_trace(image, axis=-1):
-    """Get a total intensity trace over time out of an image.
+    """Get a mean intensity trace over time out of an image.
 
     Parameters
     ----------
@@ -29,6 +29,6 @@ def extract_trace(image, axis=-1):
         The mask used to obtain the trace.
     """
     roi = _extract_roi(image, axis)
-    trace = np.sum(image[roi].astype(float), axis=0)
+    trace = np.sum(image[roi].astype(float), axis=0) / np.sum(roi)
     return trace, roi
 
