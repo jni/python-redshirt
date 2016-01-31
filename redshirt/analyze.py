@@ -1,11 +1,11 @@
 import numpy as np
 from scipy import ndimage as ndi
-from skimage.filters import threshold_otsu
+from skimage.filters import threshold_li
 
 
 def _extract_roi(image, axis=-1):
     max_frame = np.max(image, axis=axis)
-    initial_mask = max_frame > threshold_otsu(max_frame)
+    initial_mask = max_frame > threshold_li(max_frame)
     regions = ndi.label(initial_mask)[0]
     region_sizes = np.bincount(np.ravel(regions))
     return regions == (np.argmax(region_sizes[1:]) + 1)
