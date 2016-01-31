@@ -1,4 +1,5 @@
 import numpy as np
+from skimage import io
 
 def read_image(fn, normalize=True):
     """Read a CCD/CMOS image in .da format (Redshirt). [1_]
@@ -46,3 +47,13 @@ def read_image(fn, normalize=True):
     if normalize:
         images -= dark_frame[..., np.newaxis]
     return images, frame_interval, bnc, dark_frame
+
+
+def convert_images(fns, normalize=True):
+    for fn in fns:
+        image, frame_interval, bnc, dark_frame = read_image(fn, normalize)
+        out_fn = fn[:-3] + '.tif'
+        out_fn_dark = fn[:-3] + '.dark_frame.tif'
+        io.imsave(out_fn, np.transpose(image, (2, 0, 1)),
+                  plugin='tifffile', compress=1)
+        io.imsave(out_fn_dark, dark_frame, plugin='tifffile', compress=1)
