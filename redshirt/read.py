@@ -40,8 +40,8 @@ def read_image(fn, normalize=True):
         frame_interval *= header[390]  # dividing factor
     image_size = nrows * ncols * nframes
     bnc_start = header_size + image_size
-    images = np.rollaxis(np.reshape(np.array(data[header_size:bnc_start]),
-                        (nrows, ncols, nframes)),-1)
+    images = np.reshape(np.array(data[header_size:bnc_start]),
+                        (nrows, ncols, nframes))
     bnc_end = bnc_start + 8 * acquisition_ratio * nframes
     bnc = np.reshape(np.array(data[bnc_start:bnc_end]), (8, nframes * acquisition_ratio))
     dark_frame = np.reshape(np.array(data[bnc_end:-8]), (nrows, ncols))
