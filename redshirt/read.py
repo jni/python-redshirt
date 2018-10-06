@@ -1,6 +1,7 @@
 import numpy as np
 from skimage import io
 
+
 def read_image(fn, normalize=True):
     """Read a CCD/CMOS image in .da format (Redshirt). [1_]
 
@@ -29,7 +30,7 @@ def read_image(fn, normalize=True):
     ----------
     .. [1] http://www.redshirtimaging.com/support/dfo.html
     """
-    data = np.fromfile(fn,dtype = np.int16)
+    data = np.fromfile(fn, dtype=np.int16)
     header_size = 2560
     header = data[:header_size]
     ncols, nrows = map(int, header[384:386])  # prevent int16 overflow
